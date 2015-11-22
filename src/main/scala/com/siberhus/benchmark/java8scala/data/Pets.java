@@ -1,14 +1,15 @@
 package com.siberhus.benchmark.java8scala.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import com.siberhus.benchmark.java8scala.data.Pet.*;
+import com.siberhus.benchmark.java8scala.data.Pet.Color;
+import com.siberhus.benchmark.java8scala.data.Pet.Type;
 
 public class Pets {
     
-    public static final List<Pet> DATA = Collections.unmodifiableList(Arrays.asList(
+    public static final List<Pet> DATA = new ArrayList<>(Arrays.asList(
             new Pet("Pinky", Type.DOG, "2011-11-12", Color.GREEN, 44),
             new Pet("Muffin", Type.CAT, "2006-11-17", Color.GREEN, 100),
             new Pet("Monkey", Type.DOG, "2010-09-09", Color.GREEN, 51),

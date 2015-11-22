@@ -1,4 +1,4 @@
-name := """java8-scala-collections"""
+name := """java8-scala-benchmark"""
 
 version := "1.0-SNAPSHOT"
 

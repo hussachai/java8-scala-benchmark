@@ -25,44 +25,44 @@ public class JavaStreamBenchmark {
     
     @State(Scope.Benchmark)
     public static class BenchmarkState {
-        volatile List<Pet> pets = Pets.DATA;
+        List<Pet> pets = Pets.DATA;
     }
     
-//    @Benchmark
-//    public long testFilterThenCount(BenchmarkState state){
-//        return state.pets.stream().filter(pet -> pet.getWeight() > 50).count();
-//    }
-//    
-//    @Benchmark
-//    public List<Pet> testSortThenCollect(BenchmarkState state){
-//        return state.pets.stream()
-//                .sorted(Comparator.comparing(Pet::getType)
-//                        .thenComparing(Pet::getName))
-//                .collect(Collectors.toList());
-//    }
-//    
-//    @Benchmark
-//    public Map<Type, List<Pet>> testGrouping(BenchmarkState state){
-//        return state.pets.stream().collect(Collectors.groupingBy(Pet::getType));
-//    }
-//    
-//    @Benchmark
-//    public List<String> testMapThenCollect(BenchmarkState state){
-//        return state.pets.stream().map(Pet::getName).collect(Collectors.toList());
-//    }
-//    
-//    @Benchmark
-//    public int testMapThenReduce(BenchmarkState state){
-//        return state.pets.stream().map(Pet::getWeight).reduce(0, (a, b) -> a + b);
-//    }
-//    
-//    @Benchmark
-//    public Optional<Pet> testFindFirst(BenchmarkState state){
-//        return state.pets.stream().filter(pet -> pet.getName().equals("Handsome")).findFirst();
-//    }
+    @Benchmark
+    public long runFilterThenCount(BenchmarkState state){
+        return state.pets.stream().filter(pet -> pet.getWeight() > 50).count();
+    }
     
     @Benchmark
-    public List<String> testFilterThenSortThenMapThenCollect(BenchmarkState state){
+    public List<Pet> runSortThenCollect(BenchmarkState state){
+        return state.pets.stream()
+                .sorted(Comparator.comparing(Pet::getType)
+                        .thenComparing(Pet::getName))
+                .collect(Collectors.toList());
+    }
+    
+    @Benchmark
+    public Map<Type, List<Pet>> runGrouping(BenchmarkState state){
+        return state.pets.stream().collect(Collectors.groupingBy(Pet::getType));
+    }
+    
+    @Benchmark
+    public List<String> runMapThenCollect(BenchmarkState state){
+        return state.pets.stream().map(Pet::getName).collect(Collectors.toList());
+    }
+    
+    @Benchmark
+    public int runMapThenReduce(BenchmarkState state){
+        return state.pets.stream().map(Pet::getWeight).reduce(0, (a, b) -> a + b);
+    }
+    
+    @Benchmark
+    public Optional<Pet> runFindFirst(BenchmarkState state){
+        return state.pets.stream().filter(pet -> pet.getName().equals("Handsome")).findFirst();
+    }
+    
+    @Benchmark
+    public List<String> runFilterThenSortThenMapThenCollect(BenchmarkState state){
         return state.pets.stream()
                 .filter(pet -> 
                     pet.getBirthdate().isBefore(LocalDate.of(2013, Month.JANUARY, 1)) 
@@ -76,7 +76,7 @@ public class JavaStreamBenchmark {
     }
     
     @Benchmark
-    public List<String> testFilterThenSortThenMapThenCollect2(BenchmarkState state){
+    public List<String> runFilterThenSortThenMapThenCollect2(BenchmarkState state){
         return state.pets.stream()
                 .filter(pet -> pet.getBirthdate().isBefore(LocalDate.of(2013, Month.JANUARY, 1)))
                 .filter(pet -> pet.getWeight() > 50) /* Is it smart enough to combine filter? */

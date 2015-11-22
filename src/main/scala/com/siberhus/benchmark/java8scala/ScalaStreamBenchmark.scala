@@ -7,49 +7,50 @@ import java.time.Month
 
 class ScalaStreamBenchmark {
   
-  import ScalaBenchmarkData._
-  
-//  @Benchmark
-//  def testFilterThenCount(): Int = {
-//    pets.toStream.count{ pet => pet.getWeight > 50}
-//  }
-//
-//  @Benchmark
-//  def testSortThenCollect(): Seq[Pet] = {
-//    pets.toStream.sortBy{pet => (pet.getType, pet.getName)}
-//  }
-//  
-//  @Benchmark
-//  def testGrouping(): Map[Pet.Type, Seq[Pet]] = {
-//    pets.toStream.groupBy{ pet => pet.getType }
-//  }
-//  
-//  @Benchmark
-//  def testMapThenCollect(): Seq[String] = {
-//    pets.toStream.map(_.getName)
-//  }
-//  
-//  @Benchmark
-//  def testMapThenReduce(): Int = {
-//    pets.toStream.map(_.getWeight).reduceLeft{(a, b) => a + b}
-//  }
-//  
-//  @Benchmark
-//  def testFindFirst(): Option[Pet] = {
-//    pets.toStream.find { pet => pet.getName == "Handsome" }
-//  }
+  import ScalaStates._
   
   @Benchmark
-  def testFilterThenSortThenMapThenCollect(): Seq[String] = {
-    pets.toStream.filter { pet => 
+  def runFilterThenCount(state: BenchmarkState): Int = {
+    state.pets.toStream.count{ pet => pet.getWeight > 50}
+  }
+
+  @Benchmark
+  def runSortThenCollect(state: BenchmarkState): Seq[Pet] = {
+    state.pets.toStream.sortBy{pet => (pet.getType, pet.getName)}
+  }
+  
+  @Benchmark
+  def runGrouping(state: BenchmarkState): Map[Pet.Type, Seq[Pet]] = {
+    state.pets.toStream.groupBy{ pet => pet.getType }
+  }
+  
+  @Benchmark
+  def runMapThenCollect(state: BenchmarkState): Seq[String] = {
+    state.pets.toStream.map(_.getName)
+  }
+  
+  @Benchmark
+  def runMapThenReduce(state: BenchmarkState): Int = {
+    state.pets.toStream.map(_.getWeight).reduceLeft{(a, b) => a + b}
+  }
+  
+  @Benchmark
+  def runFindFirst(state: BenchmarkState): Option[Pet] = {
+    state.pets.toStream.find { pet => pet.getName == "Handsome" }
+  }
+  
+  @Benchmark
+  def runFilterThenSortThenMapThenCollect(state: BenchmarkState): Seq[String] = {
+    state.pets.toStream.filter { pet => 
         pet.getBirthdate.isBefore(LocalDate.of(2013, Month.JANUARY, 1)) && pet.getWeight > 50 }
       .sortBy { pet => (pet.getType, pet.getName, pet.getColor) }
       .map{ pet => s"${pet.getType} - name: ${pet.getName}, color: ${pet.getColor}" }
   }
   
   @Benchmark
-  def testFilterThenSortThenMapThenCollect2(): Seq[String] = {
-    pets.toStream.filter { pet => pet.getBirthdate.isBefore(LocalDate.of(2013, Month.JANUARY, 1))}
+  def runFilterThenSortThenMapThenCollect2(state: BenchmarkState): Seq[String] = {
+    
+    state.pets.toStream.filter { pet => pet.getBirthdate.isBefore(LocalDate.of(2013, Month.JANUARY, 1))}
       .filter { pet => pet.getWeight > 50 }
       .sortBy { pet => (pet.getType, pet.getName, pet.getColor) }
       .map{ pet => s"${pet.getType} - name: ${pet.getName}, color: ${pet.getColor}" }

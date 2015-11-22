@@ -18,3 +18,6 @@ dist
 /activator-sbt-atmos-akka-shim.sbt
 /activator-sbt-atmos-play-shim.sbt
 /.cache-main
+src/main/scala/TestJava.java
+src/main/scala/TestScala.scala
+

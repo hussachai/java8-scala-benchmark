@@ -3,9 +3,11 @@ import scala.collection.JavaConversions._
 import org.openjdk.jmh.annotations._
 import com.siberhus.benchmark.java8scala.data._
 
-object ScalaBenchmarkData {
+object ScalaStates {
   
   @State(Scope.Benchmark)
-  val pets: List[Pet] = Pets.DATA.toList;
+  class BenchmarkState {
+    var pets: List[Pet] = Pets.DATA.toList;
+  }
   
 }
